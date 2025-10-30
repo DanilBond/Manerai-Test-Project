@@ -1811,6 +1811,7 @@ MonoBehaviour:
   mannequinLayer:
     serializedVersion: 2
     m_Bits: 64
+  Painter: {fileID: 7473174681398509413}
 --- !u!4 &1022524496720791578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8672534941317778898, guid: 036a4b0be9dae32408a90841088ebfe9, type: 3}
@@ -2684,11 +2685,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetMaterial: {fileID: 2100000, guid: f5bd335f2d707f24c83b4e73a5b56cb2, type: 2}
-  baseMask: {fileID: 2800000, guid: 5d6f91bab10f9f345aa741e70bc0fd6f, type: 3}
+  baseMask: {fileID: 0}
   paintShader: {fileID: 4800000, guid: adf1c06797c5de54aa19b2b372badb76, type: 3}
   maskPropertyName: _Mask
-  brushRadius: 0.02
-  brushHardness: 0.5
+  brushRadius: 0.1
+  brushHardness: 1
   brushColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &7585935312491362271
 Transform:
