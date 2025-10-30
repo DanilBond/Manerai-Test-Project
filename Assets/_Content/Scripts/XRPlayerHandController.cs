@@ -15,7 +15,7 @@ public class XRPlayerHandController : MonoBehaviour
     //Consts
     private static readonly int GRIP_HASH = Animator.StringToHash("Grip");
     
-    //Private firelds
+    //Private fields
     private Vector3 _lastPosition;
     private float _velocity;
     
@@ -56,12 +56,6 @@ public class XRPlayerHandController : MonoBehaviour
         force *= punchForce * _velocity;
         
         other.rigidbody.AddForceAtPosition(force, other.GetContact(0).point);
-        other.transform.root.GetComponent<DummyController>().ProceedDamage(other.GetContact(0).point, other.GetContact(0).normal);
-    }
-
-    [ContextMenu("GC")]
-    public void GC()
-    {
-        System.GC.Collect();
+        other.transform.root.GetComponent<DummyController>().ProcessDamage(other.GetContact(0).point, other.GetContact(0).normal);
     }
 }

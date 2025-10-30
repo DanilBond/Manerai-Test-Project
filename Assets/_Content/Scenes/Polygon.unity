@@ -1807,8 +1807,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa65768de9e7054f9e4105d1ccc983a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
   bloodPrefab: {fileID: 1438152483104663698, guid: 9d7073cdb4af8e74082943bb3f876dd6, type: 3}
+  mannequinLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &1022524496720791578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8672534941317778898, guid: 036a4b0be9dae32408a90841088ebfe9, type: 3}
@@ -2017,7 +2019,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3748359890806988483}
   - component: {fileID: 7473174681398509411}
-  m_Layer: 0
+  - component: {fileID: 7473174681398509412}
+  - component: {fileID: 7473174681398509413}
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2645,6 +2649,47 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 0.020295989, z: -4.656613e-10}
     m_Extent: {x: 0.007649999, y: 0.020548385, z: 0.0076499963}
   m_DirtyAABB: 0
+--- !u!64 &7473174681398509412
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743993344271123502}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 0
+  m_Mesh: {fileID: 0}
+--- !u!114 &7473174681398509413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3743993344271123502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2539207c380c2d04cb2125a8192eeded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMaterial: {fileID: 2100000, guid: f5bd335f2d707f24c83b4e73a5b56cb2, type: 2}
+  baseMask: {fileID: 2800000, guid: 5d6f91bab10f9f345aa741e70bc0fd6f, type: 3}
+  paintShader: {fileID: 4800000, guid: adf1c06797c5de54aa19b2b372badb76, type: 3}
+  maskPropertyName: _Mask
+  brushRadius: 0.02
+  brushHardness: 0.5
+  brushColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &7585935312491362271
 Transform:
   m_ObjectHideFlags: 0

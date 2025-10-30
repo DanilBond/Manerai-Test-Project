@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityTimer;
+using Debug = UnityEngine.Debug;
 
-public class DummyController : MonoBehaviour
+public class DummyController : MonoBehaviour, IDamagable
 {
+    [Header("Prefab References")]
+    public ParticleSystem bloodPrefab;
+    public LayerMask mannequinLayer;
+    
+    //Private fields
     private SkinnedMeshRenderer _skinnedMeshRenderer;
     private MeshCollider _meshCollider;
-    public Mesh mesh;
-
-    public ParticleSystem bloodPrefab;
     private ObjectPool<ParticleSystem> _bloodPool;
 
     private void Awake()
@@ -20,8 +23,6 @@ public class DummyController : MonoBehaviour
         
         _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         _meshCollider = GetComponentInChildren<MeshCollider>();
-        
-        mesh = new Mesh();
     }
 
     private void InitPools()
@@ -51,11 +52,33 @@ public class DummyController : MonoBehaviour
         
     }
 
-    public void ProceedDamage(Vector3 pos, Vector3 norm)
+    public MeshPainter Painter;
+    
+    public void ProcessDamage(Vector3 hitPosition, Vector3 hitNormal)
     {
         ParticleSystem particleInstance = _bloodPool.Get();
-        particleInstance.transform.position = pos;
-        particleInstance.transform.rotation = Quaternion.LookRotation(norm);
+        particleInstance.transform.position = hitPosition;
+        particleInstance.transform.rotation = Quaternion.LookRotation(hitNormal);
         particleInstance.Play();
+
+        Mesh dynamicMesh = new Mesh();
+        _skinnedMeshRenderer.BakeMesh(dynamicMesh, true);
+        _meshCollider.sharedMesh = dynamicMesh;
+        _meshCollider.enabled = true;
+        
+        Vector3 origin = hitPosition + hitNormal * 0.1f;  // выносим старт из меша
+        Vector3 dir = -hitNormal;
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, 0.15f, mannequinLayer, QueryTriggerInteraction.Ignore))
+        {
+            Debug.Log(hit.collider.gameObject.name);
+            if (hit.collider && hit.collider.GetComponent<MeshCollider>())
+            {
+                Painter.PaintUV(hit.textureCoord);
+                //painter.PaintUV(hit.textureCoord);
+                Debug.Log(hit.textureCoord);
+            }
+        }
+        
+        _meshCollider.enabled = false;
     }
 }
