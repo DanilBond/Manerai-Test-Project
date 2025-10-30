@@ -16,6 +16,16 @@ public class DummyController : MonoBehaviour
 
     private void Awake()
     {
+        InitPools();
+        
+        _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        _meshCollider = GetComponentInChildren<MeshCollider>();
+        
+        mesh = new Mesh();
+    }
+
+    private void InitPools()
+    {
         _bloodPool = new ObjectPool<ParticleSystem>(
             //OnCreate
             () =>
@@ -34,11 +44,6 @@ public class DummyController : MonoBehaviour
             particle => particle.gameObject.SetActive(false), particle => Destroy(particle.gameObject),
             10,
             25);
-        
-        _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        _meshCollider = GetComponentInChildren<MeshCollider>();
-        
-        mesh = new Mesh();
     }
 
     void FixedUpdate()

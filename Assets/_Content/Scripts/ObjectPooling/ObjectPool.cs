@@ -36,18 +36,6 @@ public sealed class ObjectPool<T> where T : class
             Prewarm(initialCapacity);
     }
 
-    ~ObjectPool()
-    {
-        Debug.Log("destruct");
-        Clear();
-    }
-
-    public void Prewarm(int count)
-    {
-        for (int i = 0; i < count; i++)
-            _stack.Push(_createFunc());
-    }
-
     public T Get()
     {
         T item = _stack.Count > 0 ? _stack.Pop() : _createFunc();
@@ -78,5 +66,11 @@ public sealed class ObjectPool<T> where T : class
                 _onDestroy(item);
 
         _stack.Clear();
+    }
+
+    private void Prewarm(int count)
+    {
+        for (int i = 0; i < count; i++)
+            _stack.Push(_createFunc());
     }
 }
