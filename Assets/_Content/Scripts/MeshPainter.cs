@@ -7,6 +7,8 @@ public class MeshPainter : MonoBehaviour
     [SerializeField] private CustomRenderTexture renderTexture;
     [SerializeField] private Material brushMaterial;
     
+    private static readonly int DrawPosition = Shader.PropertyToID("_DrawPosition");
+    
     void Start()
     {
        renderTexture.Initialize();
@@ -14,7 +16,7 @@ public class MeshPainter : MonoBehaviour
     
     public void PaintUV(Vector2 uv)
     {
-        brushMaterial.SetVector("_DrawPosition", new Vector4(uv.x, uv.y, 0, 0));
+        brushMaterial.SetVector(DrawPosition, new Vector4(uv.x, uv.y, 0, 0));
         renderTexture.Update(2);
     }
 }

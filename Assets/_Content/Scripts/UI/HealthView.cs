@@ -60,6 +60,8 @@ public class HealthView : MonoBehaviour
             Time.deltaTime * followSpeed);
         
         if (!_camera) return;
-        transform.LookAt(_camera);
+        //transform.LookAt(_camera);
+        Vector3 viewDir = (_camera.position - transform.position).normalized;
+        transform.rotation = Quaternion.LookRotation(viewDir, Vector3.up) * Quaternion.Euler(0, 180, 0);
     }
 }
