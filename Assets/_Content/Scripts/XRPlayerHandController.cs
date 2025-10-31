@@ -20,9 +20,7 @@ public class XRPlayerHandController : MonoBehaviour
     private float _velocity;
     
     public float punchForce;
-    
-    public float maxVel, minVel, avgVel, lastVel;
-    public List<float> allVels;
+    public float minForceToDamage;
     
     private void Awake()
     {
@@ -46,6 +44,7 @@ public class XRPlayerHandController : MonoBehaviour
     
     private void CalculateVelocity()
     {
+        //Сами ищем скорость через дельту т.к нам не важна скорость манекена, от этого только проблемы будут
         Vector3 currentPosition = transform.position;
         Vector3 difference = _lastPosition - currentPosition;
         _velocity = difference.magnitude;
@@ -54,24 +53,15 @@ public class XRPlayerHandController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Vector3 force = other.GetContact(0).normal.normalized * -1;
-        //Сами ищем скорость через дельту т.к нам не важна скорость манекена, от этого только проблемы будут
-        force *= punchForce * _velocity;
-
-        allVels.Add(punchForce * _velocity);
-        
-        minVel = Mathf.Min(minVel, punchForce * _velocity);
-        maxVel = Mathf.Max(maxVel, punchForce * _velocity);
-
-        float vSum = 0;
-        foreach (float f in allVels)
+        if (other.gameObject.TryGetComponent(out IDamageable damagable))
         {
-            vSum += f;
-        }
-        avgVel = vSum / allVels.Count;
-        lastVel = punchForce * _velocity;
+            float finalVelocity = punchForce * _velocity;
+            if (finalVelocity < minForceToDamage) return;
         
-        other.rigidbody.AddForceAtPosition(force, other.GetContact(0).point);
-        other.transform.root.GetComponent<DummyController>().ProcessDamage(other.GetContact(0).point, other.GetContact(0).normal);
+            Vector3 force = other.GetContact(0).normal.normalized * -1 * finalVelocity;
+        
+            other.rigidbody.AddForceAtPosition(force, other.GetContact(0).point);
+            other.transform.root.GetComponent<DummyController>().ProcessDamage(10, other.GetContact(0).point, other.GetContact(0).normal);
+        }
     }
 }

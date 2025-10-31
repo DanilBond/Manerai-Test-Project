@@ -28,5 +28,5 @@ Material:
     - _DrawHardness: 0.2
     - _DrawRadius: 0.05
     m_Colors:
-    - _DrawPosition: {r: 0.5654719, g: 0.6417618, b: 0, a: 0}
+    - _DrawPosition: {r: 0.918773, g: 0.042705476, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IDamagable
+public interface IDamageable
 {
-    void ProcessDamage(Vector3 hitPosition, Vector3 hitNormal);
+    void ProcessDamage(float amount, Vector3 hitPosition, Vector3 hitNormal);
 }
