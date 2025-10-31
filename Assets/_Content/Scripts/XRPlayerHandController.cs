@@ -21,6 +21,9 @@ public class XRPlayerHandController : MonoBehaviour
     
     public float punchForce;
     
+    public float maxVel, minVel, avgVel, lastVel;
+    public List<float> allVels;
+    
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -54,6 +57,19 @@ public class XRPlayerHandController : MonoBehaviour
         Vector3 force = other.GetContact(0).normal.normalized * -1;
         //Сами ищем скорость через дельту т.к нам не важна скорость манекена, от этого только проблемы будут
         force *= punchForce * _velocity;
+
+        allVels.Add(punchForce * _velocity);
+        
+        minVel = Mathf.Min(minVel, punchForce * _velocity);
+        maxVel = Mathf.Max(maxVel, punchForce * _velocity);
+
+        float vSum = 0;
+        foreach (float f in allVels)
+        {
+            vSum += f;
+        }
+        avgVel = vSum / allVels.Count;
+        lastVel = punchForce * _velocity;
         
         other.rigidbody.AddForceAtPosition(force, other.GetContact(0).point);
         other.transform.root.GetComponent<DummyController>().ProcessDamage(other.GetContact(0).point, other.GetContact(0).normal);

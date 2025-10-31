@@ -431,7 +431,7 @@
                 "m_Node": {
                     "m_Id": "b6cd369ea5ba4318b50940d0399db032"
                 },
-                "m_SlotId": 5
+                "m_SlotId": 0
             },
             "m_InputSlot": {
                 "m_Node": {
@@ -2291,7 +2291,7 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     },
-    "m_Space": 2
+    "m_Space": 0
 }
 
 {
@@ -3030,7 +3030,7 @@
         "y": 0.0
     },
     "m_Labels": [],
-    "m_Channel": 0
+    "m_Channel": 1
 }
 
 {
@@ -3337,10 +3337,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -849.8182373046875,
-            "y": 140.951171875,
-            "width": 0.0,
-            "height": 0.0
+            "x": -936.9999389648438,
+            "y": -137.99998474121095,
+            "width": 55.99993896484375,
+            "height": 24.000015258789064
         }
     },
     "m_Slots": [
