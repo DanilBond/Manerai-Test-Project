@@ -1385,7 +1385,7 @@ Transform:
   m_GameObject: {fileID: 1919579988}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5630085, z: 0.94377184}
+  m_LocalPosition: {x: 0, y: 1.547, z: 0.882}
   m_LocalScale: {x: 0.34593, y: 0.34593, z: 0.34593}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2684,13 +2684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2539207c380c2d04cb2125a8192eeded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetMaterial: {fileID: 2100000, guid: f5bd335f2d707f24c83b4e73a5b56cb2, type: 2}
-  baseMask: {fileID: 0}
-  paintShader: {fileID: 4800000, guid: adf1c06797c5de54aa19b2b372badb76, type: 3}
-  maskPropertyName: _Mask
-  brushRadius: 0.1
-  brushHardness: 1
-  brushColor: {r: 1, g: 1, b: 1, a: 1}
+  renderTexture: {fileID: 8600000, guid: 7638868409393cc4fbf4ec7eddc32573, type: 2}
+  brushMaterial: {fileID: 2100000, guid: 665074a6943521e479f89dcf5ec89478, type: 2}
 --- !u!4 &7585935312491362271
 Transform:
   m_ObjectHideFlags: 0

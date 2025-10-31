@@ -9,8 +9,8 @@ using Debug = UnityEngine.Debug;
 public class DummyController : MonoBehaviour, IDamagable
 {
     [Header("Prefab References")]
-    public ParticleSystem bloodPrefab;
-    public LayerMask mannequinLayer;
+    [SerializeField] private ParticleSystem bloodPrefab;
+    [SerializeField] private  LayerMask mannequinLayer;
     
     //Private fields
     private SkinnedMeshRenderer _skinnedMeshRenderer;
