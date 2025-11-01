@@ -41,20 +41,6 @@ public class DamageDealer : MonoBehaviour
     
     private void OnCollisionEnter(Collision other)
     {
-        // if (other.gameObject.TryGetComponent(out IDamageable damagable))
-        // {
-        //     float finalVelocity = punchForce * _velocity;
-        //     if (finalVelocity < minForceToDamage) return;
-        //
-        //     ContactPoint contactPoint = other.GetContact(0);
-        //     Vector3 force = contactPoint.normal.normalized * -1 * finalVelocity;
-        //
-        //     other.rigidbody.AddForceAtPosition(force, contactPoint.point);
-        //     damagable.ProcessDamage(10, contactPoint.point, contactPoint.normal);
-        // }
-        
-
-        // Точка/нормаль контакта
         var contact = other.GetContact(0);
         Vector3 point = contact.point;
         Vector3 normal = contact.normal;
@@ -80,7 +66,6 @@ public class DamageDealer : MonoBehaviour
             float multiplier = damageCurve.Evaluate(remapped);
             float finalDamage = baseDamage * multiplier;
 
-            Debug.Log($"finalDamage: {finalDamage} - remapped: {remapped} - forceScalar: {forceScalar}");
             damagable.ProcessDamage(finalDamage, point, normal);
         }
     }

@@ -3,17 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityTimer;
 using Debug = UnityEngine.Debug;
 
 public class DummyController : MonoBehaviour, IDamageable
 {
     [Header("Data")]
-    [SerializeField] private LayerMask mannequinLayer;
+    [SerializeField] private LayerMask dummyLayer;
+    [SerializeField] private DummyConfig dummyConfig;
     
     [Header("References")]
-    [SerializeField] private HealthBehaviour healthBehaviour;
     [SerializeField] private ParticleSystem bloodPrefab;
+    [SerializeField] private ConfigurableJoint standJoint;
+    [SerializeField] private ConfigurableJoint spineJoint;
+    [SerializeField] private ConfigurableJoint headJoint;
+    
+    //Props
+    public HealthBehaviour HealthBehaviour { get; private set; }
     
     //Private fields
     private SkinnedMeshRenderer _skinnedMeshRenderer;
@@ -21,12 +28,35 @@ public class DummyController : MonoBehaviour, IDamageable
     private MeshPainter _painter;
     private ObjectPool<ParticleSystem> _bloodPool;
 
+    readonly JointDrive _diedJoint = new JointDrive()
+    {
+        positionSpring = 5f,
+        maximumForce = Mathf.Infinity
+    };
+    
     private void Awake()
     {
         InitPools();
+        
         _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         _meshCollider = GetComponentInChildren<MeshCollider>();
         _painter = GetComponentInChildren<MeshPainter>();
+        HealthBehaviour = GetComponentInChildren<HealthBehaviour>();
+        
+        HealthBehaviour.Died += OnDied;
+    }
+
+    private void OnDestroy()
+    {
+        HealthBehaviour.Died -= OnDied;
+    }
+
+    private void OnDied()
+    {
+        spineJoint.angularXDrive = _diedJoint;
+        spineJoint.angularYZDrive = _diedJoint;
+        headJoint.angularXDrive = _diedJoint;
+        headJoint.angularYZDrive = _diedJoint;
     }
 
     private void InitPools()
@@ -46,14 +76,16 @@ public class DummyController : MonoBehaviour, IDamageable
                 Timer.Register(particle.main.duration, () => { _bloodPool.Release(particle); });
             },
             //OnRelease
-            particle => particle.gameObject.SetActive(false), particle => Destroy(particle.gameObject),
+            particle => particle.gameObject.SetActive(false),
+            //OnDestroy
+            particle => Destroy(particle.gameObject),
             10,
             25);
     }
     
     public void ProcessDamage(float amount, Vector3 hitPosition, Vector3 hitNormal)
     {
-        healthBehaviour.ApplyDamage(amount);
+        HealthBehaviour.ApplyDamage(amount);
         
         ParticleSystem particleInstance = _bloodPool.Get();
         particleInstance.transform.position = hitPosition;
@@ -67,7 +99,7 @@ public class DummyController : MonoBehaviour, IDamageable
         
         Vector3 origin = hitPosition + hitNormal * 0.1f;  // выносим старт из меша
         Vector3 dir = -hitNormal;
-        if (Physics.Raycast(origin, dir, out RaycastHit hit, 0.15f, mannequinLayer, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, 0.15f, dummyLayer, QueryTriggerInteraction.Ignore))
         {
             if (hit.collider && hit.collider.GetComponent<MeshCollider>())
             {
