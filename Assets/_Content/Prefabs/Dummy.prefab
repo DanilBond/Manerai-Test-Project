@@ -1029,13 +1029,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfa65768de9e7054f9e4105d1ccc983a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mannequinLayer:
+  dummyLayer:
     serializedVersion: 2
     m_Bits: 64
+  dummyConfig: {fileID: 11400000, guid: 11e4b527841f41b418107c8c8a5318c7, type: 2}
+  bloodPrefab: {fileID: 1438152483104663698, guid: 9d7073cdb4af8e74082943bb3f876dd6, type: 3}
   standJoint: {fileID: 3534685595991000072}
   spineJoint: {fileID: 804002404858480554}
   headJoint: {fileID: 7700682115304220983}
-  bloodPrefab: {fileID: 1438152483104663698, guid: 9d7073cdb4af8e74082943bb3f876dd6, type: 3}
 --- !u!114 &7672179611415540819
 MonoBehaviour:
   m_ObjectHideFlags: 0

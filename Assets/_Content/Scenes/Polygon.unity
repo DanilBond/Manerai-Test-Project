@@ -158,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dummyPrefab: {fileID: 6667751680019290912, guid: b954c10724667a74d8d35c2a3e84d439, type: 3}
   spawnPoint: {fileID: 1370187311}
+  aliveDelay: 1
   spawnDelay: 1
 --- !u!4 &72017271
 Transform:

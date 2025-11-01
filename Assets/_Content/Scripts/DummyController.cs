@@ -27,12 +27,6 @@ public class DummyController : MonoBehaviour, IDamageable
     private MeshCollider _meshCollider;
     private MeshPainter _painter;
     private ObjectPool<ParticleSystem> _bloodPool;
-
-    readonly JointDrive _diedJoint = new JointDrive()
-    {
-        positionSpring = 5f,
-        maximumForce = Mathf.Infinity
-    };
     
     private void Awake()
     {
@@ -48,15 +42,16 @@ public class DummyController : MonoBehaviour, IDamageable
 
     private void OnDestroy()
     {
+        _bloodPool.Clear();
         HealthBehaviour.Died -= OnDied;
     }
 
     private void OnDied()
     {
-        spineJoint.angularXDrive = _diedJoint;
-        spineJoint.angularYZDrive = _diedJoint;
-        headJoint.angularXDrive = _diedJoint;
-        headJoint.angularYZDrive = _diedJoint;
+        spineJoint.angularXDrive = dummyConfig.DiedSpineJointData.ToJointDrive();
+        spineJoint.angularYZDrive = dummyConfig.DiedSpineJointData.ToJointDrive();
+        headJoint.angularXDrive = dummyConfig.DiedHeadJointData.ToJointDrive();
+        headJoint.angularYZDrive = dummyConfig.DiedHeadJointData.ToJointDrive();
     }
 
     private void InitPools()
@@ -73,7 +68,14 @@ public class DummyController : MonoBehaviour, IDamageable
             particle =>
             {
                 particle.gameObject.SetActive(true);
-                Timer.Register(particle.main.duration, () => { _bloodPool.Release(particle); });
+                GameObject owner = gameObject;
+                Timer.Register(particle.main.duration, () =>
+                {
+                    if (owner != null) 
+                        _bloodPool.Release(particle);
+                    else 
+                        Destroy(particle.gameObject);
+                });
             },
             //OnRelease
             particle => particle.gameObject.SetActive(false),
