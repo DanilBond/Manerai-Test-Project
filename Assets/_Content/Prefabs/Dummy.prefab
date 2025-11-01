@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2539207c380c2d04cb2125a8192eeded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 8600000, guid: 7638868409393cc4fbf4ec7eddc32573, type: 2}
+  skinnedMeshRenderer: {fileID: 4933100656559346407}
   brushMaterial: {fileID: 2100000, guid: 665074a6943521e479f89dcf5ec89478, type: 2}
 --- !u!1 &8122378359308773092
 GameObject:

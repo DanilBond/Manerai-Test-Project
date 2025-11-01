@@ -80,7 +80,10 @@ public class DummyController : MonoBehaviour, IDamageable
             //OnRelease
             particle => particle.gameObject.SetActive(false),
             //OnDestroy
-            particle => Destroy(particle.gameObject),
+            particle =>
+            {
+                if (particle) Destroy(particle.gameObject);
+            },
             10,
             25);
     }
