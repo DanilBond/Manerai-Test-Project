@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityTimer;
@@ -9,6 +10,7 @@ using Debug = UnityEngine.Debug;
 
 public class DummyController : MonoBehaviour, IDamageable
 {
+
     [Header("Data")]
     [SerializeField] private LayerMask dummyLayer;
     [SerializeField] private DummyConfig dummyConfig;
@@ -27,6 +29,8 @@ public class DummyController : MonoBehaviour, IDamageable
     private MeshCollider _meshCollider;
     private MeshPainter _painter;
     private ObjectPool<ParticleSystem> _bloodPool;
+    
+    private static readonly int DissolveAmount = Shader.PropertyToID("_DissolveAmount");
     
     private void Awake()
     {
@@ -52,6 +56,8 @@ public class DummyController : MonoBehaviour, IDamageable
         spineJoint.angularYZDrive = dummyConfig.DiedSpineJointData.ToJointDrive();
         headJoint.angularXDrive = dummyConfig.DiedHeadJointData.ToJointDrive();
         headJoint.angularYZDrive = dummyConfig.DiedHeadJointData.ToJointDrive();
+        
+        AudioManager.Instance.PlayDieClip();
     }
 
     private void InitPools()
@@ -86,6 +92,18 @@ public class DummyController : MonoBehaviour, IDamageable
             },
             10,
             25);
+    }
+
+    public IEnumerator StartDissolveIE()
+    {
+        bool completed = false;
+        float dissolveAlpha = 0f;
+        DOTween.To(() => dissolveAlpha, x => dissolveAlpha = x, 1f, dummyConfig.DissolveDuration).OnUpdate(() =>
+        {
+            _skinnedMeshRenderer.material.SetFloat(DissolveAmount, dissolveAlpha);
+        }).OnComplete(() => { completed = true; }).SetEase(dummyConfig.DissolveEase);
+        
+        while (!completed) yield return null;
     }
     
     public void ProcessDamage(float amount, Vector3 hitPosition, Vector3 hitNormal)

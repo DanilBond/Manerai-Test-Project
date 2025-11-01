@@ -67,6 +67,8 @@ public class DamageDealer : MonoBehaviour
             float finalDamage = baseDamage * multiplier;
 
             damagable.ProcessDamage(finalDamage, point, normal);
+            
+            AudioManager.Instance.PlayPunchSoundAtLocation(point);
         }
     }
 }

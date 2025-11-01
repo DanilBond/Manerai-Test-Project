@@ -19,7 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: 
+  m_LockedProperties: _DisplaceAmount
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -105,11 +105,14 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DisplaceAmount: -0.02
+    - _DissolveAmount: 0
+    - _DissolveHeight: -0.39
     - _DistortionAmount: 50
     - _DistortionScale: 0.005
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _Float: 13
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0

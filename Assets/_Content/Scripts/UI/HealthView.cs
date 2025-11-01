@@ -12,6 +12,7 @@ public class HealthView : MonoBehaviour
     [SerializeField] private float followSpeed;
     
     [Space]
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private HealthBehaviour health;
     [SerializeField] private Slider slider;
 
@@ -44,6 +45,8 @@ public class HealthView : MonoBehaviour
     {
         slider.maxValue = max;
         slider.value = current;
+
+        canvasGroup.alpha = current <= 0 ? 0 : 1;
     }
 
     private void OnDied()

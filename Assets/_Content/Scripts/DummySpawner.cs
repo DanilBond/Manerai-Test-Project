@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class DummySpawner : MonoBehaviour
@@ -14,15 +15,6 @@ public class DummySpawner : MonoBehaviour
 
     private void Start()
     {
-        // DummyController existingDummy = FindObjectOfType<DummyController>(false);
-        // if (existingDummy)
-        // {
-        //     _currentDummy = existingDummy;
-        //     _currentDummy.HealthBehaviour.Died += OnDummyDead;
-        //     _dummyPool.Add(_currentDummy, false, false);
-        //     return;
-        // }
-        
         SpawnNewDummy();
     }
 
@@ -39,7 +31,10 @@ public class DummySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(aliveDelay);
         _currentDummy.HealthBehaviour.Died -= OnDummyDead;
+
+        yield return _currentDummy.StartDissolveIE();
         Destroy(_currentDummy.gameObject);
+        
         yield return new WaitForSeconds(spawnDelay);
         SpawnNewDummy();
     }

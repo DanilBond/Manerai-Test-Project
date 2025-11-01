@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5592c7033c45a045ab5cce985b4b61d, type: 3}
   m_Name: DummyConfig
   m_EditorClassIdentifier: 
+  dissolveDuration: 2.5
+  dissolveEase: 1
   diedStandJointData:
     positionSpring: 5
     positionDamper: 0
