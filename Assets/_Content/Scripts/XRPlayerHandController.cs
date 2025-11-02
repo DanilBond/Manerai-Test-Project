@@ -7,30 +7,35 @@ using UnityEngine.InputSystem;
 public class XRPlayerHandController : MonoBehaviour
 {
     //Public fields
-    [SerializeField] private InputActionProperty gripAction;
+    [SerializeField] private InputActionProperty weaponSwitchAction;
+    [SerializeField] private DamageDealer[] weapons;
     
-    //References
-    private Animator _animator;
-    
-    //Consts
-    private static readonly int GRIP_HASH = Animator.StringToHash("Grip");
-    
-    
-    
-    private void Awake()
+    //Private fields
+    private int _weaponIndex;
+
+    private void Start()
     {
-        _animator = GetComponent<Animator>();
+        SelectWeapon();
     }
 
     private void Update()
     {
-        Animate();
+        SwitchWeapon();
     }
 
-    private void Animate()
+    private void SwitchWeapon()
     {
-        if (!gripAction.reference) return;
-        
-        _animator.SetFloat(GRIP_HASH, gripAction.action.ReadValue<float>());
+        if (weaponSwitchAction.action.triggered)
+        {
+            _weaponIndex++;
+            if (_weaponIndex >= weapons.Length) _weaponIndex = 0;
+            
+            SelectWeapon();
+        }
+    }
+
+    private void SelectWeapon()
+    {
+        for (int i = 0; i < weapons.Length; i++) weapons[i].gameObject.SetActive(_weaponIndex == i);
     }
 }

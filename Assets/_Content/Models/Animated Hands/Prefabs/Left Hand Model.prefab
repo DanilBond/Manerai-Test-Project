@@ -451,6 +451,18 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 6558622148059887818, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  weaponSwitchAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Weapon Switch
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: de10a47d-9097-424f-a346-cde2fec12a94
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!114 &105264194721761299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,8 +475,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e470424c90c2a194cb4f9da4013621df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseDamage: 0
+  damageCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   punchForce: 4000
-  minForceToDamage: 40
+  minExpectedForce: 0
+  maxExpectedForce: 0
+  hitCooldownPerTarget: 0
 --- !u!1 &109434732395284511
 GameObject:
   m_ObjectHideFlags: 0
